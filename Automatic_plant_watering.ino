@@ -12,8 +12,6 @@ int moisture2_value = 0;
 int moisture3_value = 0;
 int moisture4_value = 0;
 
-int percentValue = (moisture1_value-110)*100L/(1023-110);
-
 // Releiden pinnien määrittäminen
 int relay1 = 3;
 int relay2 = 4;
@@ -29,8 +27,8 @@ LiquidCrystal lcd(rs, en, d4, d5, d6, d7);
 
 //Näytön taustavalo
 const int lcdBacklight = 13;
-#define lcdON = HIGH;
-#define lcdOFF = LOW;
+//#define lcdON = HIGH;
+//#define lcdOFF = LOW;
 
 void setup() {
   // Ulostulojen määrittäminen
@@ -45,14 +43,13 @@ void setup() {
   digitalWrite(lcdBacklight, HIGH);
   lcd.begin(16, 2);
   lcd.print("Hello beautiful!");
-  
-  
-  // Sarjaportin määrittäminen ulostuloksi
+   
+  // Sarjaportin määrittäminen
   Serial.begin(9600);  
 }
 
 
-  // Määritetään kasveille voidit loopin lukemisen helpottamiseksi  
+  // Määritetään janoisille kasveille voidit loopin lukemisen helpottamiseksi  
   void Kasvi1(){
     String DisplayWords;
     DisplayWords = ("Nro.1 janoinen! ");
@@ -101,9 +98,14 @@ void setup() {
     lcd.print(moisture4_value);
   }
 
+
+  //Määritetään 
+
+
 void loop() {
   
- // Kosteusarvojen lukeminen antureista
+ // Kosteusarvojen lukeminen antureista ja 
+ // arvojen muuttaminen prosenteiksi
  moisture1_value = analogRead(moisture1);
  int percentValue1 = (moisture1_value)*100L/(1023-110);
  moisture2_value = analogRead(moisture2);
@@ -113,6 +115,8 @@ void loop() {
  moisture4_value = analogRead(moisture4);
  int percentValue4 = (moisture4_value)*100L/(1023-110);
 
+  
+ 
   Serial.print("Anturi1: ");
   Serial.print(percentValue1);
   Serial.println("%");
@@ -167,7 +171,7 @@ void loop() {
  digitalWrite(relay3, LOW);
  digitalWrite(relay4, LOW);
  
- // Odotetaan 30 sekuntia ja toistetaan prosessi
+ // Odotetaan 1 sekuntia ja toistetaan prosessi
  delay(1000);
  
 }
