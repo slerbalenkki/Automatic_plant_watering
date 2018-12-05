@@ -30,6 +30,8 @@ const int lcdBacklight = 13;
 //#define lcdON = HIGH;
 //#define lcdOFF = LOW;
 
+
+
 void setup() {
   // Ulostulojen määrittäminen
   pinMode(relay1, OUTPUT);
@@ -49,7 +51,7 @@ void setup() {
 }
 
 
-  // Määritetään janoisille kasveille voidit loopin lukemisen helpottamiseksi  
+  // Määritetään janoisille kasveille voidit   
   void Kasvi1(){
     String DisplayWords;
     DisplayWords = ("Nro.1 janoinen! ");
@@ -60,6 +62,7 @@ void setup() {
     lcd.print("                ");
     lcd.setCursor(0, 1);
     lcd.print(moisture1_value);
+    delay(3000);
   }
 
   void Kasvi2(){
@@ -72,6 +75,7 @@ void setup() {
     lcd.print("                ");
     lcd.setCursor(0, 1);
     lcd.print(moisture2_value);
+    delay(3000);
   }
 
   void Kasvi3(){
@@ -84,6 +88,7 @@ void setup() {
     lcd.print("                ");
     lcd.setCursor(0, 1);
     lcd.print(moisture3_value);
+    delay(3000);
   }
 
   void Kasvi4(){
@@ -96,13 +101,18 @@ void setup() {
     lcd.print("                ");
     lcd.setCursor(0, 1);
     lcd.print(moisture4_value);
+    delay(3000);
   }
 
 
-  //Määritetään 
-
 
 void loop() {
+
+  //Alotusnäyttö
+  lcd.setCursor(0 ,0);
+  lcd.print("Hello beautiful!");
+  lcd.setCursor(0, 1);
+  lcd.print("                ");
   
  // Kosteusarvojen lukeminen antureista ja 
  // arvojen muuttaminen prosenteiksi
@@ -129,7 +139,7 @@ void loop() {
   Serial.print("Anturi4: ");
   Serial.print(percentValue4);
   Serial.println("%");
-  Serial.println(" ");  
+  Serial.println(" "); 
   
     
  // Tarkistetaan tarvitseeko jokin kasveista vettä
