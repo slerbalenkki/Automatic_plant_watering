@@ -1,55 +1,64 @@
 #include <LiquidCrystal.h>
 
-// set all moisture sensors PIN ID
+// Kosteusanturien (analogi)pinnien määrittäminen
 int moisture1 = A0;
 int moisture2 = A1;
 int moisture3 = A2;
 int moisture4 = A3;
 
-// declare moisture values
+// Kosteusanturin arvo
 int moisture1_value = 0;
 int moisture2_value = 0;
 int moisture3_value = 0;
 int moisture4_value = 0;
 
-// set water relays
+// Releiden pinnien määrittäminen
 int relay1 = 3;
 int relay2 = 4;
 int relay3 = 5;
 int relay4 = 6;
 
-// set water pump
+// Vesipumpun pinnin määrittäminen
 int pump = 2;
 
-//Näyttö
+//Näytön pinnien määrittäminen
 const int rs = 7, en = 8, d4 = 9, d5 = 10, d6 = 11, d7 = 12;
 LiquidCrystal lcd(rs, en, d4, d5, d6, d7);
 
+//Näytön taustavalo
+const int lcdBacklight = 13;
+#define lcdON = HIGH;
+#define lcdOFF = LOW;
+
 void setup() {
-  // declare relay as output
+  // Ulostulojen määrittäminen
   pinMode(relay1, OUTPUT);
   pinMode(relay2, OUTPUT);
   pinMode(relay3, OUTPUT);
   pinMode(relay4, OUTPUT);
+  pinMode(pump, OUTPUT);
+
+  //Taustavalon ulostulon ja tervehdystekstin määrittäminen
+  pinMode(lcdBacklight, OUTPUT);
+  digitalWrite(lcdBacklight, HIGH);
   lcd.begin(16, 2);
   lcd.print("Hello beautiful!");
   
-  // declare pump as output
-  pinMode(pump, OUTPUT);
-  // declare the ledPin as an OUTPUT:
+  // Sarjaportin määrittäminen ulostuloksi
   Serial.begin(9600);  
 }
 
 void loop() {
   
- // read the value from the moisture sensors:
+ // Kosteusarvojen lukeminen antureista
  moisture1_value = analogRead(moisture1);
  moisture2_value = analogRead(moisture2);
  moisture3_value = analogRead(moisture3);
  moisture4_value = analogRead(moisture4);
+
  
- // check which plant need water
- // and open the switch for that specific plant
+ // Tarkistetaan tarvitseeko joku kasvi vettä
+ // ja avataan kyseiselle kasville rele
  
  if(moisture1_value<=450){
   digitalWrite(relay1, HIGH);
@@ -64,25 +73,26 @@ void loop() {
   digitalWrite(relay4, HIGH);
  }
  
- // make sure there is at least one plant that needs water
- // if there is, open the motor
+ 
+ // Varmistetaan, että ainakin yksi kasvi tarvitsee vettä
+ // jos tarvitsee, käynnistetään moottori
  if(moisture1_value<=450 || moisture2_value<=450 || moisture3_value<=450 || moisture4_value<=450){
    digitalWrite(pump, HIGH);
  }
  
- // let it water the plant for 5 seconds
+ // Annetaan kasville 5 sekuntia vettä
  delay(5000);
  
- // turn the pump off
+ // Sammutetaan pumppu
  digitalWrite(pump, LOW);
  
- // go each switch and turn them off
+ // Suljetaan jokainen rele
  digitalWrite(relay1, LOW);
  digitalWrite(relay2, LOW);
  digitalWrite(relay3, LOW);
  digitalWrite(relay4, LOW);
  
- // wait 5 minutes and repeat the process
+ // Odotetaan 30 sekuntia ja toistetaan prosessi
  delay(30000);
  
 }
