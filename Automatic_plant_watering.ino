@@ -43,10 +43,65 @@ void setup() {
   digitalWrite(lcdBacklight, HIGH);
   lcd.begin(16, 2);
   lcd.print("Hello beautiful!");
+  /*lcd.begin(16, 2);
+  lcd.print("Nro.1 janoinen! ");
+  lcd.setCursor(0, 1);
+  lcd.print("200             ");*/
+
   
   // Sarjaportin määrittäminen ulostuloksi
   Serial.begin(9600);  
 }
+
+
+  // Määritetään kasveille voidit loopin lukemisen helpottamiseksi  
+  void Kasvi1(){
+    String DisplayWords;
+    DisplayWords = ("Nro.1 janoinen! ");
+    Serial.println(DisplayWords);
+    lcd.setCursor(0, 0);
+    lcd.print(DisplayWords);
+    lcd.setCursor(0, 1);
+    lcd.print("                ");
+    lcd.setCursor(0, 1);
+    lcd.print(moisture1_value);
+  }
+
+  void Kasvi2(){
+    String DisplayWords;
+    DisplayWords = ("Nro.2 janoinen! ");
+    Serial.println(DisplayWords);
+    lcd.setCursor(0, 0);
+    lcd.print(DisplayWords);
+    lcd.setCursor(0, 1);
+    lcd.print("                ");
+    lcd.setCursor(0, 1);
+    lcd.print(moisture2_value);
+  }
+
+  void Kasvi3(){
+    String DisplayWords;
+    DisplayWords = ("Nro.3 janoinen! ");
+    Serial.println(DisplayWords);
+    lcd.setCursor(0, 0);
+    lcd.print(DisplayWords);
+    lcd.setCursor(0, 1);
+    lcd.print("                ");
+    lcd.setCursor(0, 1);
+    lcd.print(moisture3_value);
+  }
+
+  void Kasvi4(){
+    String DisplayWords;
+    DisplayWords = ("Nro.4 janoinen! ");
+    Serial.println(DisplayWords);
+    lcd.setCursor(0, 0);
+    lcd.print(DisplayWords);
+    lcd.setCursor(0, 1);
+    lcd.print("                ");
+    lcd.setCursor(0, 1);
+    lcd.print(moisture4_value);
+  }
 
 void loop() {
   
@@ -56,21 +111,33 @@ void loop() {
  moisture3_value = analogRead(moisture3);
  moisture4_value = analogRead(moisture4);
 
- 
+  Serial.print("Anturi1: ");
+  Serial.println(moisture1_value);
+  Serial.print("Anturi2: ");
+  Serial.println(moisture2_value);
+  Serial.print("Anturi3: ");
+  Serial.println(moisture3_value);
+  Serial.print("Anturi4: ");
+  Serial.println(moisture4_value);
+    
  // Tarkistetaan tarvitseeko joku kasvi vettä
  // ja avataan kyseiselle kasville rele
  
  if(moisture1_value<=450){
   digitalWrite(relay1, HIGH);
+  Kasvi1();
  }
  if(moisture2_value<=450){
   digitalWrite(relay2, HIGH);
+  Kasvi2();
  }
  if(moisture3_value<=450){
   digitalWrite(relay3, HIGH);
+  Kasvi3();
  }
  if(moisture4_value<=450){
   digitalWrite(relay4, HIGH);
+  Kasvi4();
  }
  
  
@@ -93,7 +160,7 @@ void loop() {
  digitalWrite(relay4, LOW);
  
  // Odotetaan 30 sekuntia ja toistetaan prosessi
- delay(30000);
+ delay(1000);
  
 }
 
