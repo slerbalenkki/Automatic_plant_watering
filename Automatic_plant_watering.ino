@@ -12,6 +12,8 @@ int moisture2_value = 0;
 int moisture3_value = 0;
 int moisture4_value = 0;
 
+int percentValue = (moisture1_value-110)*100L/(1023-110);
+
 // Releiden pinnien määrittäminen
 int relay1 = 3;
 int relay2 = 4;
@@ -43,11 +45,7 @@ void setup() {
   digitalWrite(lcdBacklight, HIGH);
   lcd.begin(16, 2);
   lcd.print("Hello beautiful!");
-  /*lcd.begin(16, 2);
-  lcd.print("Nro.1 janoinen! ");
-  lcd.setCursor(0, 1);
-  lcd.print("200             ");*/
-
+  
   
   // Sarjaportin määrittäminen ulostuloksi
   Serial.begin(9600);  
@@ -107,21 +105,31 @@ void loop() {
   
  // Kosteusarvojen lukeminen antureista
  moisture1_value = analogRead(moisture1);
+ int percentValue1 = (moisture1_value)*100L/(1023-110);
  moisture2_value = analogRead(moisture2);
+ int percentValue2 = (moisture2_value)*100L/(1023-110);
  moisture3_value = analogRead(moisture3);
+ int percentValue3 = (moisture3_value)*100L/(1023-110);
  moisture4_value = analogRead(moisture4);
+ int percentValue4 = (moisture4_value)*100L/(1023-110);
 
   Serial.print("Anturi1: ");
-  Serial.println(moisture1_value);
+  Serial.print(percentValue1);
+  Serial.println("%");
   Serial.print("Anturi2: ");
-  Serial.println(moisture2_value);
+  Serial.print(percentValue2);
+  Serial.println("%");
   Serial.print("Anturi3: ");
-  Serial.println(moisture3_value);
+  Serial.print(percentValue3);
+  Serial.println("%");
   Serial.print("Anturi4: ");
-  Serial.println(moisture4_value);
+  Serial.print(percentValue4);
+  Serial.println("%");
+  Serial.println(" ");  
+  
     
- // Tarkistetaan tarvitseeko joku kasvi vettä
- // ja avataan kyseiselle kasville rele
+ // Tarkistetaan tarvitseeko jokin kasveista vettä
+ // ja avataan venttiili kyseiselle kasville
  
  if(moisture1_value<=450){
   digitalWrite(relay1, HIGH);
@@ -153,7 +161,7 @@ void loop() {
  // Sammutetaan pumppu
  digitalWrite(pump, LOW);
  
- // Suljetaan jokainen rele
+ // Suljetaan jokainen venttiili
  digitalWrite(relay1, LOW);
  digitalWrite(relay2, LOW);
  digitalWrite(relay3, LOW);
