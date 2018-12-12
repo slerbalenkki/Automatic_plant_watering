@@ -114,9 +114,75 @@ void setup() {
   }*/  
 
     
-     
+void Kukat(){
   
-  void Kukat(){
+  lcd.clear(); 
+  
+  //Kukka 1
+  moisture1_value = analogRead(moisture1);
+  int percentValue1 = (moisture1_value)*100L/(1023);
+  Serial.print("Anturi1: ");
+  Serial.print(moisture1_value);
+  Serial.print(" / ");
+  Serial.print(percentValue1);
+  Serial.println("%");
+  lcd.setCursor(0, 0);
+  lcd.print("K1");
+  lcd.setCursor(4, 0);
+  lcd.print(percentValue1);
+  lcd.setCursor(6, 0);
+  lcd.print("%");
+  
+  //Kukka 2
+  moisture2_value = analogRead(moisture2);
+  int percentValue2 = (moisture2_value)*100L/(1023);
+  Serial.print("Anturi2: ");
+  Serial.print(moisture2_value);
+  Serial.print(" / ");
+  Serial.print(percentValue2);
+  Serial.println("%");
+  lcd.setCursor(8, 0);
+  lcd.print("K2");
+  lcd.setCursor(12, 0);
+  lcd.print(percentValue2);
+  lcd.setCursor(14, 0);
+  lcd.print("%");
+
+  //Kukka 3
+  moisture3_value = analogRead(moisture3);
+  int percentValue3 = (moisture3_value)*100L/(1023);
+  Serial.print("Anturi3: ");
+  Serial.print(moisture3_value);
+  Serial.print(" / ");
+  Serial.print(percentValue3);
+  Serial.println("%");
+  lcd.setCursor(0, 1);
+  lcd.print("K3");
+  lcd.setCursor(4, 1);
+  lcd.print(percentValue3);
+  lcd.setCursor(6, 1);
+  lcd.print("%");
+  
+  //Kukka 4
+  moisture4_value = analogRead(moisture4);
+  int percentValue4 = (moisture4_value)*100L/(1023);
+  Serial.print("Anturi4: ");
+  Serial.print(moisture4_value);
+  Serial.print(" / ");
+  Serial.print(percentValue4);
+  Serial.println("%");
+  Serial.println(" ");  
+  lcd.setCursor(8, 1);
+  lcd.print("K4");
+  lcd.setCursor(12, 1);
+  lcd.print(percentValue4);
+  lcd.setCursor(14, 1);
+  lcd.print("%");    
+
+  Anturi();    
+}
+  
+ /* void Kukat(){
 
     // Kosteusarvojen lukeminen antureista ja 
      // arvojen muuttaminen prosenteiksi
@@ -129,7 +195,7 @@ void setup() {
      moisture4_value = analogRead(moisture4);
      int percentValue4 = (moisture4_value)*100L/(1023-110);
 
-      Serial.print("Anturi1: ");
+  Serial.print("Anturi1: ");
   Serial.print(percentValue1);
   Serial.println("%");
   Serial.print("Anturi2: ");
@@ -141,9 +207,9 @@ void setup() {
   Serial.print("Anturi4: ");
   Serial.print(percentValue4);
   Serial.println("%");
-  Serial.println(" "); 
+  Serial.println(" "); */
 
-      
+   /*   
     //Näytönalustus
     lcd.clear(); 
 
@@ -180,35 +246,35 @@ void setup() {
     lcd.print("%");    
     
     Anturi();  
-  }
+  }*/
  
 
-  void Anturi(){
+void Anturi(){
   if(moisture1_value<=450){
   digitalWrite(relay1, HIGH);
   lcd.setCursor(2, 0);
   lcd.print("!");
   //Kasvi1();
- }
- if(moisture2_value<=450){
+  }
+  if(moisture2_value<=450){
   digitalWrite(relay2, HIGH);
   lcd.setCursor(10, 0);
   lcd.print("!");
   //Kasvi2();
- }
- if(moisture3_value<=450){
+  }
+  if(moisture3_value<=450){
   digitalWrite(relay3, HIGH);
   lcd.setCursor(2, 1);
   lcd.print("!");
   //Kasvi3();
- }
- if(moisture4_value<=450){
+  }
+  if(moisture4_value<=450){
   digitalWrite(relay4, HIGH);
   lcd.setCursor(10, 1);
   lcd.print("!");
   //Kasvi4();
- }
-}
+  }
+  }
 
  
 
@@ -243,6 +309,6 @@ void loop() {
   Kukat();
   Kastelu();
      
- // Odotetaan 1 sekuntia ja toistetaan prosessi
+ // Odotetaan () sekuntia ja toistetaan prosessi
  delay(1000);
 } 
