@@ -45,6 +45,7 @@ void setup() {
   digitalWrite(lcdBacklight, HIGH);
   lcd.begin(16, 2);
   lcd.print("Hello beautiful!");
+  delay(5000);
    
   // Sarjaportin määrittäminen
   Serial.begin(9600);  
@@ -52,7 +53,7 @@ void setup() {
 
 
   // Määritetään janoisille kasveille voidit   
-  void Kasvi1(){
+  /*void Kasvi1(){
     String DisplayWords;
     DisplayWords = ("Nro.1 janoinen! ");
     Serial.println(DisplayWords);
@@ -102,32 +103,33 @@ void setup() {
     lcd.setCursor(0, 1);
     lcd.print(moisture4_value);
     delay(3000);
-  }
+  }*/
 
-
-
-void loop() {
-
-  //Alotusnäyttö
+  /*void Alotus(){
   lcd.setCursor(0 ,0);
   lcd.print("Hello beautiful!");
   lcd.setCursor(0, 1);
   lcd.print("                ");
-  
- // Kosteusarvojen lukeminen antureista ja 
- // arvojen muuttaminen prosenteiksi
- moisture1_value = analogRead(moisture1);
- int percentValue1 = (moisture1_value)*100L/(1023-110);
- moisture2_value = analogRead(moisture2);
- int percentValue2 = (moisture2_value)*100L/(1023-110);
- moisture3_value = analogRead(moisture3);
- int percentValue3 = (moisture3_value)*100L/(1023-110);
- moisture4_value = analogRead(moisture4);
- int percentValue4 = (moisture4_value)*100L/(1023-110);
+  delay(5000);
+  }*/  
 
+    
+     
   
- 
-  Serial.print("Anturi1: ");
+  void Kukat(){
+
+    // Kosteusarvojen lukeminen antureista ja 
+     // arvojen muuttaminen prosenteiksi
+     moisture1_value = analogRead(moisture1);
+     int percentValue1 = (moisture1_value)*100L/(1023-110);
+     moisture2_value = analogRead(moisture2);
+     int percentValue2 = (moisture2_value)*100L/(1023-110);
+     moisture3_value = analogRead(moisture3);
+     int percentValue3 = (moisture3_value)*100L/(1023-110);
+     moisture4_value = analogRead(moisture4);
+     int percentValue4 = (moisture4_value)*100L/(1023-110);
+
+      Serial.print("Anturi1: ");
   Serial.print(percentValue1);
   Serial.println("%");
   Serial.print("Anturi2: ");
@@ -140,31 +142,81 @@ void loop() {
   Serial.print(percentValue4);
   Serial.println("%");
   Serial.println(" "); 
-  
+
+      
+    //Näytönalustus
+    lcd.clear(); 
+
+    //Kukka 1
+    lcd.setCursor(0, 0);
+    lcd.print("K1");
+    lcd.setCursor(4, 0);
+    lcd.print(percentValue1);
+    lcd.setCursor(6, 0);
+    lcd.print("%");
+       
+    //kukka 2
+    lcd.setCursor(8, 0);
+    lcd.print("K2");
+    lcd.setCursor(12, 0);
+    lcd.print(percentValue2);
+    lcd.setCursor(14, 0);
+    lcd.print("%");
     
- // Tarkistetaan tarvitseeko jokin kasveista vettä
- // ja avataan venttiili kyseiselle kasville
+    //Kukka 3
+    lcd.setCursor(0, 1);
+    lcd.print("K3");
+    lcd.setCursor(4, 1);
+    lcd.print(percentValue3);
+    lcd.setCursor(6, 1);
+    lcd.print("%");
+    
+    //Kukka 4
+    lcd.setCursor(8, 1);
+    lcd.print("K4");
+    lcd.setCursor(12, 1);
+    lcd.print(percentValue4);
+    lcd.setCursor(14, 1);
+    lcd.print("%");    
+    
+    Anturi();  
+  }
  
- if(moisture1_value<=450){
+
+  void Anturi(){
+  if(moisture1_value<=450){
   digitalWrite(relay1, HIGH);
-  Kasvi1();
+  lcd.setCursor(2, 0);
+  lcd.print("!");
+  //Kasvi1();
  }
  if(moisture2_value<=450){
   digitalWrite(relay2, HIGH);
-  Kasvi2();
+  lcd.setCursor(10, 0);
+  lcd.print("!");
+  //Kasvi2();
  }
  if(moisture3_value<=450){
   digitalWrite(relay3, HIGH);
-  Kasvi3();
+  lcd.setCursor(2, 1);
+  lcd.print("!");
+  //Kasvi3();
  }
  if(moisture4_value<=450){
   digitalWrite(relay4, HIGH);
-  Kasvi4();
+  lcd.setCursor(10, 1);
+  lcd.print("!");
+  //Kasvi4();
  }
+}
+
  
+
  
  // Varmistetaan, että ainakin yksi kasvi tarvitsee vettä
  // jos tarvitsee, käynnistetään moottori
+
+ void Kastelu(){
  if(moisture1_value<=450 || moisture2_value<=450 || moisture3_value<=450 || moisture4_value<=450){
    digitalWrite(pump, HIGH);
  }
@@ -179,10 +231,18 @@ void loop() {
  digitalWrite(relay1, LOW);
  digitalWrite(relay2, LOW);
  digitalWrite(relay3, LOW);
- digitalWrite(relay4, LOW);
- 
+ digitalWrite(relay4, LOW); 
+}
+  
+  
+
+
+
+void loop() {
+   
+  Kukat();
+  Kastelu();
+     
  // Odotetaan 1 sekuntia ja toistetaan prosessi
  delay(1000);
- 
-}
-
+} 
