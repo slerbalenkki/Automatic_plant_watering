@@ -40,8 +40,6 @@ void setup() {
   pinMode(relay3, OUTPUT);
   pinMode(relay4, OUTPUT);
   pinMode(pump, OUTPUT);
-  
-  // Sarjaportin määrittäminen
   Serial.begin(9600);  
   
   //Taustavalon ulostulon määrittäminen
