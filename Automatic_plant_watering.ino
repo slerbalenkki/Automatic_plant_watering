@@ -73,17 +73,13 @@ void setup() {
   lcd.setCursor(7, 1);
   lcd.print("-1-");
   delay(1000);
-  lcd.clear();  
-  
- 
-  
+  lcd.clear();    
 }
- 
+     
 
-    
 void Kasvit(){
   
-  lcd.clear(); 
+  lcd.clear();  
   
   //Kasvi 1
   moisture1_value = analogRead(moisture1); 
@@ -125,7 +121,7 @@ void Kasvit(){
   lcd.print("%");
   
   //Kasvi 4
-  
+  moisture3_value = analogRead(moisture4);
   Serial.print("Anturi4: ");
   Serial.print(moisture4_value);
   Serial.print(" / ");
@@ -165,13 +161,10 @@ void Anturi(){
   lcd.print("!");
   }
 }
-
  
-
  
  // Varmistetaan, että ainakin yksi kasvi tarvitsee vettä
  // jos tarvitsee, käynnistetään moottori
-
  void Kastelu(){
  if(moisture1_value<=450 || moisture2_value<=450 || moisture3_value<=450 || moisture4_value<=450){
    digitalWrite(pump, HIGH);
@@ -189,9 +182,6 @@ void Anturi(){
  digitalWrite(relay3, LOW);
  digitalWrite(relay4, LOW); 
 }
-  
-  
-
 
 
 void loop() {
