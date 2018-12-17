@@ -1,0 +1,11 @@
+Crowtail kastelujärsjestelmä
+Billing of materials
+
+1x Arduino Uno
+1x Crowtail Smart Pum Board V2.0 -kortti integroidulla Arduinolla, OLED näytöllä ja RTC kellolla (PSMC18001M)
+4x Crowtail mullan kosteusantureita
+1x Nelikanavainen venttiili 12VDC
+1x Crowtail vesipumppu
+4x 50cm Crowtail johtoja
+1x 5,5m vesiletkua
+1x 12VDC 2A seinäadapteri (DC21)
