@@ -12,12 +12,6 @@ int moisture2_value = 0;
 int moisture3_value = 0;
 int moisture4_value = 0;
 
-//Kosteusanturien arvojen muuntaminen prosenteiksi
-int percentValue1 = (moisture1_value)*100L/(1023);
-int percentValue2 = (moisture2_value)*100L/(1023);
-int percentValue3 = (moisture3_value)*100L/(1023);
-int percentValue4 = (moisture4_value)*100L/(1023);
-
 // Releiden pinnien määrittäminen
 int relay1 = 3;
 int relay2 = 4;
@@ -28,8 +22,8 @@ int relay4 = 6;
 int pump = 2;
 
 //Näytön ja näytön taustavalon pinnien määrittäminen
-const int rs = 7, e = 8, d4 = 9, d5 = 10, d6 = 11, d7 = 12;
-LiquidCrystal lcd(rs, e, d4, d5, d6, d7);
+const int rs = 7, en = 8, d4 = 9, d5 = 10, d6 = 11, d7 = 12;
+LiquidCrystal lcd(rs, en, d4, d5, d6, d7);
 const int lcdBacklight = 13;
 
 
@@ -49,7 +43,7 @@ void setup() {
   //Tervehdystekstin määrittäminen
   lcd.begin(16, 2);
   lcd.print("Hello beautiful!");
-  delay(2000);
+  delay(5000);
   lcd.clear();
   
   //Käynnistys
@@ -73,16 +67,21 @@ void setup() {
   lcd.setCursor(7, 1);
   lcd.print("-1-");
   delay(1000);
-  lcd.clear();    
-}
-     
-
-void Kasvit(){
-  
   lcd.clear();  
   
+ 
+  
+}
+ 
+
+    
+void Kasvit(){
+  
+  lcd.clear(); 
+  
   //Kasvi 1
-  moisture1_value = analogRead(moisture1); 
+  moisture1_value = analogRead(moisture1);
+  int percentValue1 = (moisture1_value)*100L/(1023);
   Serial.print("Anturi1: ");
   Serial.print(moisture1_value);
   Serial.print(" / ");
@@ -95,7 +94,8 @@ void Kasvit(){
   lcd.print("%");
   
   //Kasvi 2
-  moisture2_value = analogRead(moisture2); 
+  moisture2_value = analogRead(moisture2);
+  int percentValue2 = (moisture2_value)*100L/(1023);
   Serial.print("Anturi2: ");
   Serial.print(moisture2_value);
   Serial.print(" / ");
@@ -108,7 +108,8 @@ void Kasvit(){
   lcd.print("%");
 
   //Kasvi 3
-  moisture3_value = analogRead(moisture3);  
+  moisture3_value = analogRead(moisture3);
+  int percentValue3 = (moisture3_value)*100L/(1023);
   Serial.print("Anturi3: ");
   Serial.print(moisture3_value);
   Serial.print(" / ");
@@ -121,7 +122,8 @@ void Kasvit(){
   lcd.print("%");
   
   //Kasvi 4
-  moisture3_value = analogRead(moisture4);
+  moisture4_value = analogRead(moisture4);
+  int percentValue4 = (moisture4_value)*100L/(1023);
   Serial.print("Anturi4: ");
   Serial.print(moisture4_value);
   Serial.print(" / ");
@@ -144,16 +146,19 @@ void Anturi(){
   digitalWrite(relay1, HIGH);
   lcd.setCursor(2, 0);
   lcd.print("!");
+  //Kasvi1();
   }
   if(moisture2_value<=450){
   digitalWrite(relay2, HIGH);
   lcd.setCursor(10, 0);
   lcd.print("!");
+  //Kasvi2();
   }
   if(moisture3_value<=450){
   digitalWrite(relay3, HIGH);
   lcd.setCursor(2, 1);
   lcd.print("!");
+  //Kasvi3();
   }
   if(moisture4_value<=450){
   digitalWrite(relay4, HIGH);
@@ -161,10 +166,13 @@ void Anturi(){
   lcd.print("!");
   }
 }
+
  
+
  
  // Varmistetaan, että ainakin yksi kasvi tarvitsee vettä
  // jos tarvitsee, käynnistetään moottori
+
  void Kastelu(){
  if(moisture1_value<=450 || moisture2_value<=450 || moisture3_value<=450 || moisture4_value<=450){
    digitalWrite(pump, HIGH);
@@ -182,6 +190,9 @@ void Anturi(){
  digitalWrite(relay3, LOW);
  digitalWrite(relay4, LOW); 
 }
+  
+  
+
 
 
 void loop() {
